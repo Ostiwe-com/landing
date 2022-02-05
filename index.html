@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Ostiwe</title>
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+    <meta name="og:title" content="Ostiwe"/>
+    <meta name="og:image" content="thumb.png"/>
+    <style>
+        * {
+            font-family: 'Permanent Marker', cursive;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        #canvas-interactive {
+            width: 100vw;
+            height: 100vh;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        .canvas-interactive-wrapper {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .page-title {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 8em;
+            z-index: 999;
+        }
+    </style>
+</head>
+<body class="canvas-interactive-wrapper">
+<h1 class="page-title">Ostiwe</h1>
+<canvas id="canvas-interactive"></canvas>
+<script src="./granim.min.js"></script>
+<script>
+    function shuffle(array) {
+        let currentIndex = array.length, temporaryValue, randomIndex;
+
+        // While there remain elements to shuffle...
+        while (0 !== currentIndex) {
+
+            // Pick a remaining element...
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex -= 1;
+
+            // And swap it with the current element.
+            temporaryValue = array[currentIndex];
+            array[currentIndex] = array[randomIndex];
+            array[randomIndex] = temporaryValue;
+        }
+
+        return array;
+    }
+
+    let gradients = [
+        ['#21D4FD', '#B721FF'],
+        ['#8EC5FC', '#E0C3FC'],
+        ['#FEE140', '#FA709A'],
+        ['#D9AFD9', '#97D9E1'],
+        ['#FF3CAC', '#784BA0'],
+        ['#A9C9FF', '#FFBBEC'],
+        ['#F093FB', '#F5576C'],
+        ['#A8EDEA', '#FED6E3'],
+        ['#30CFD0', '#330867'],
+        ['#89F7FE', '#66A6FF'],
+    ];
+    new Granim({
+        element: '#canvas-interactive',
+        name: 'interactive-gradient',
+        elToSetClassOn: '.canvas-interactive-wrapper',
+        direction: 'diagonal',
+        isPausedWhenNotInView: false,
+        stateTransitionSpeed: 500,
+        states: {
+            'default-state': {
+                gradients: shuffle(gradients),
+                transitionSpeed: 10000,
+            },
+        },
+    });
+</script>
+</body>
+</html>
