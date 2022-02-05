@@ -1,0 +1,35 @@
+name: Deploy to k8s
+on: [ workflow_dispatch ]
+env:
+  DOCKER_TAG: "${{ secrets.DOCKER_REGISTRY }}/landing:${{ github.sha }}"
+  HELM_HELPER: ${{ secrets.HELM_HELPER_IMAGE }}
+  NAMESPACE: "landing"
+jobs:
+  build:
+    runs-on: self-hosted
+    steps:
+      - name: Get repository
+        uses: actions/checkout@v2
+      - run: docker login -u ${{ secrets.DOCKER_REGISTRY_USER }} -p ${{ secrets.DOCKER_REGISTRY_PASSWORD }} "${{ secrets.DOCKER_REGISTRY }}"
+      - name: Build
+        run: docker build -t "${{ env.DOCKER_TAG }}" .
+      - name: Push
+        run: docker push "${{ env.DOCKER_TAG }}"
+
+  deploy:
+    needs:
+      - build
+    runs-on: helm-deploy
+    steps:
+      - run: docker login -u ${{ secrets.DOCKER_REGISTRY_USER }} -p ${{ secrets.DOCKER_REGISTRY_PASSWORD }} "${{ secrets.DOCKER_REGISTRY }}"
+      - run: |
+          docker run ${{ env.HELM_HELPER }} helm upgrade landing ./landing \
+          --install \
+          --wait \
+          --force \
+          --namespace ${{ env.NAMESPACE }} \
+          --create-namespace \
+          --set-string imageTag=${{ github.sha }}
+
+
+
