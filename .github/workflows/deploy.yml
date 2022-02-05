@@ -6,7 +6,7 @@ env:
   NAMESPACE: "landing"
 jobs:
   build:
-    runs-on: [self-hosted, organization]
+    runs-on: [self-hosted, Organization]
     steps:
       - name: Get repository
         uses: actions/checkout@v2
