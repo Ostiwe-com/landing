@@ -1,0 +1,45 @@
+@font-face {
+    font-family: "ProximaNova";
+    src: url("../fonts/proximanova_regular.ttf") format("truetype");
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+body {
+    background-image: url(../images/bg.gif);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+}
+
+.page-title__wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.page-title {
+    position: relative;
+    color: rgb(88, 145, 229);
+    font-family: "ProximaNova", serif;
+    font-size: 56pt;
+    text-transform: uppercase;
+}
+
+.page-title::after {
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    color: white;
+    content: "ostiwe";
+    font-family: "ProximaNova", serif;
+    font-size: 56pt;
+    text-transform: uppercase;
+}
