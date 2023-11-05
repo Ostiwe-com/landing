@@ -4,7 +4,7 @@ env:
   HELM_HELPER: ${{ secrets.HELM_HELPER_IMAGE }}
 jobs:
   lint:
-    runs-on: [helm-deploy]
+    runs-on: [arc-runner-set]
     steps:
       - run: docker login -u ${{ secrets.DOCKER_REGISTRY_USER }} -p ${{ secrets.DOCKER_REGISTRY_PASSWORD }} "${{ secrets.HELM_HELPER_IMAGE }}"
       - name: Lint
