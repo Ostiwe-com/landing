@@ -19,7 +19,7 @@ jobs:
   deploy:
     needs:
       - build
-    runs-on: helm-deploy
+    runs-on: [arc-runner-set]
     steps:
       - run: docker login -u ${{ secrets.DOCKER_REGISTRY_USER }} -p ${{ secrets.DOCKER_REGISTRY_PASSWORD }} "${{ secrets.DOCKER_REGISTRY }}"
       - run: |
